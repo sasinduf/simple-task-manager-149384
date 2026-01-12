@@ -154,3 +154,56 @@ Response (200) returns the updated task. Response (404) if not found.
 GET /healthz should report process liveness without checking external dependencies.
 
 GET /readyz should report readiness and should fail if key dependencies such as the database cannot be reached.
+
+## Diagrams
+
+This section provides sequence diagrams for core flows, aligned with the draft endpoints defined above.
+
+### Sequence diagram: Create Task (POST /tasks)
+
+Caption: Client creates a task; the backend validates input, applies business rules, persists the task, and returns the created representation.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant C as "Client"
+  participant API as "HTTP API (Routes/Controllers)"
+  participant S as "TaskService"
+  participant R as "TaskRepository"
+  participant DB as "Database"
+
+  C->>API: "POST /tasks (title, description?, dueDate?)"
+  API->>API: "Validate request body"
+  API->>S: "createTask(command)"
+  S->>S: "Apply business rules (title required, status default)"
+  S->>R: "insert(task)"
+  R->>DB: "INSERT task"
+  DB-->>R: "Inserted row"
+  R-->>S: "Persisted Task"
+  S-->>API: "Created Task"
+  API-->>C: "201 Created (Task JSON)"
+```
+
+### Sequence diagram: List Tasks (GET /tasks)
+
+Caption: Client lists tasks; the backend parses filters/pagination, queries storage, and returns a paged list response.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant C as "Client"
+  participant API as "HTTP API (Routes/Controllers)"
+  participant S as "TaskService"
+  participant R as "TaskRepository"
+  participant DB as "Database"
+
+  C->>API: "GET /tasks?status?&limit?&offset?&sort?"
+  API->>API: "Parse and validate query params"
+  API->>S: "listTasks(query)"
+  S->>R: "findMany(query)"
+  R->>DB: "SELECT tasks (filters, pagination)"
+  DB-->>R: "Rows + total (or count)"
+  R-->>S: "Tasks page"
+  S-->>API: "Tasks page"
+  API-->>C: "200 OK ({items, page})"
+```

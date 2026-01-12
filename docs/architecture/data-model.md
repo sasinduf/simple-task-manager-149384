@@ -53,3 +53,33 @@ Titles should be validated for non-empty content. Status must be constrained to 
 ## Soft delete vs hard delete
 
 The initial version can implement hard deletes for simplicity. If auditing or recovery is desired later, add a deletedAt timestamp and filter it in reads. That change should be captured as a migration and reflected in API semantics.
+
+## Diagrams
+
+### ER diagram
+
+Caption: Conceptual ER model for Task and the optional User entity. This diagram reflects the fields described in this document and is not an implemented schema.
+
+```mermaid
+erDiagram
+  TASK {
+    string id
+    string title
+    string description
+    string status
+    datetime due_date
+    datetime created_at
+    datetime updated_at
+    string user_id
+  }
+
+  USER {
+    string id
+    string email
+    string password_hash
+    datetime created_at
+    datetime updated_at
+  }
+
+  USER ||--o{ TASK : "owns (optional v1)"
+```

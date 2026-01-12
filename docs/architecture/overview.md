@@ -253,3 +253,62 @@ Configuration should support selecting the database backend and enabling or disa
 Once the monolith is stable, scaling should proceed in stages:
 
 First, improve operational maturity by adding tracing, improved metrics, and automated migrations. Next, introduce authentication and multi-user support, then add richer query/filtering, tags, and task ordering. For higher throughput, introduce caching for common reads and optimize database indexing. If the system outgrows a monolith, extract modules along bounded contexts, for example separating task management from user management, but only once clear operational and organizational needs emerge.
+
+## Diagrams
+
+This section complements the written architecture with diagrams that summarize the system context, internal module boundaries, and key interactions.
+
+### System/Context diagram
+
+Caption: High-level context showing a client calling the Node.js backend, and the planned future data store.
+
+```mermaid
+flowchart LR
+  Client["Client (Web/Mobile/CLI)"] --> Backend["Node.js Backend (Monolith)"]
+  Backend --> Store["Data Store (Future: Postgres or SQLite)"]
+```
+
+### Container/Module diagram (monolith decomposition)
+
+Caption: Internal decomposition of the single backend service into layers and cross-cutting concerns.
+
+```mermaid
+flowchart TB
+  subgraph Backend["Node.js Backend (Monolith)"]
+    direction TB
+
+    subgraph ApiLayer["API Layer"]
+      Routes["Routes"]
+      Controllers["Controllers"]
+      Middleware["Middleware (Validation/Auth/Error Mapping)"]
+    end
+
+    subgraph ServiceLayer["Service Layer"]
+      TaskService["TaskService (Business Logic)"]
+    end
+
+    subgraph DataAccessLayer["Data Access Layer"]
+      Repo["TaskRepository"]
+      DbClient["DB Client/Adapter"]
+    end
+
+    subgraph CrossCutting["Cross-cutting"]
+      Config["Configuration"]
+      Logging["Logging"]
+      Metrics["Metrics/Tracing (Optional)"]
+    end
+
+    Routes --> Controllers
+    Controllers --> TaskService
+    Middleware --> Controllers
+    TaskService --> Repo
+    Repo --> DbClient
+  end
+
+  DbClient --> Store["Database (Postgres or SQLite)"]
+  Controllers --> Logging
+  TaskService --> Logging
+  Repo --> Logging
+  Config --> Routes
+  Metrics --> Routes
+```

@@ -7,6 +7,7 @@ This repository is currently a scaffold for a simple task manager backend servic
 Architecture documentation lives under `docs/architecture/`:
 
 - `docs/architecture/README.md` (start here)
+- `docs/architecture/diagrams.md` (diagram index; diagrams are embedded in the docs via Mermaid)
 - `docs/architecture/overview.md`
 - `docs/architecture/api.md`
 - `docs/architecture/data-model.md`

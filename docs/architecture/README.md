@@ -23,3 +23,4 @@ The security and observability document proposes baseline operational and securi
 - Data model draft: data-model.md
 - Runtime and configuration: runtime-and-config.md
 - Security and observability: security-and-observability.md
+- Diagrams index: diagrams.md
