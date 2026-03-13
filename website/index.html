@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simple Task Manager</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="navbar" aria-label="Primary">
+        <a class="brand" href="https://fruit.com" target="_blank" rel="noreferrer">
+          <span class="brand-mark" aria-hidden="true">STM</span>
+          <span class="brand-text">Simple Task Manager</span>
+        </a>
+
+        <div class="nav-actions">
+          <a class="nav-link" href="#features">Features</a>
+          <a class="nav-link" href="#about">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">A minimal task manager scaffold</h1>
+        <p class="muted">
+          This is a simple static site placeholder for the Simple Task Manager repository.
+        </p>
+      </section>
+
+      <section id="features" aria-labelledby="features-title" class="card">
+        <h2 id="features-title">Features</h2>
+        <ul>
+          <li>Minimal static website</li>
+          <li>Ready for future REST API + UI expansion</li>
+          <li>Light theme, accessible structure</li>
+        </ul>
+      </section>
+
+      <section id="about" aria-labelledby="about-title" class="card">
+        <h2 id="about-title">About</h2>
+        <p>
+          This repository currently contains a placeholder website and initial documentation.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <p class="footer-line">
+          <span id="footer-year"></span>
+          <span class="footer-sep" aria-hidden="true">•</span>
+          <a class="footer-link" href="https://fruit.com" target="_blank" rel="noreferrer">
+            Fruit.com
+          </a>
+          <span class="footer-sep" aria-hidden="true">•</span>
+          <a class="footer-link" href="mailto:hello@example.com">hello@example.com</a>
+        </p>
+
+        <p class="footer-subline muted">
+          Built as a simple scaffold — replace links and copy as your project evolves.
+        </p>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
